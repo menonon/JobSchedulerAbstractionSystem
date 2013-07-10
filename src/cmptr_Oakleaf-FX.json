@@ -1,0 +1,65 @@
+{
+    "system" : "Oakleaf-FX",
+    "site" : "Information Technology Center, The University of Tokyo",
+    "country" : "Japan",
+    "manufacturer" : "Fujitsu",
+    "systemLogo" : "",
+    "siteLogo" : "",
+    "nationalFlag" : ""
+    "nodesPerSystem" : "76800",
+    "processorsPerNode" : "1",
+    "coresPerProcessor" : "16",
+    "memoryPerNode" : "32",
+    "jobScheduler" : "PJM",
+    "queue" : [
+	{
+	    "queueName" : "debug",
+	    "maxNodes" : "240",
+	    "minNodes" : "1",
+	    "maxTime" : "00:30:00",
+	    "maxMemory" : "28",
+	    "notes" : "For debug."
+	},
+	{
+	    "queueName" : "short",
+	    "maxNodes" : "72",
+	    "minNodes" : "1",
+	    "maxTime" : "06:00:00",
+	    "maxMemory" : "28",
+	    "notes" : "For short jobs"
+	},
+	{
+	    "queueName" : "small",
+	    "maxNodes" : "216",
+	    "minNodes" : "12",
+	    "maxTime" : "48:00:00",
+	    "maxMemory" : "28",
+	    "notes" : "For small jobs."
+	},
+	{
+	    "queueName" : "medium",
+	    "maxNodes" : "372",
+	    "minNodes" : "217",
+	    "maxTime" : "48:00:00",
+	    "maxMemory" : "28",
+	    "notes" : "For medium jobs."
+	},
+	{
+	    "queueName" : "large",
+	    "maxNodes" : "480",
+	    "minNodes" : "373",
+	    "maxTime" : "48:00:00",
+	    "maxMemory" : "28",
+	    "notes" : "For laege jobs."
+	},
+	{
+	    "queueName" : "x-large",
+	    "maxNodes" : "1440",
+	    "minNodes" : "481",
+	    "maxTime" : "24:00:00",
+	    "maxMemory" : "28",
+	    "notes" : "For x-large jobs."
+	}
+    ],
+    "loginHost" : "oakleaf-fx.cc.u-tokyo.ac.jp"
+}

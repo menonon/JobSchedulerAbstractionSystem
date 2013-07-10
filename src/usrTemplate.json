@@ -1,0 +1,10 @@
+{
+    "userName" : "",
+    "property" : [
+	{
+	    "computerName" : "",
+	    "userName"     : "",
+	    "sshIdentity"  : ""
+	}
+    ]    
+}

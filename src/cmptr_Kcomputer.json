@@ -1,0 +1,25 @@
+{
+    "system" : "K computer",
+    "site" : "RIKEN Advanced Institute for Computational Science (AICS)",
+    "country" : "Japan",
+    "manufacturer" : "Fujitsu",
+    "systemLogo" : "",
+    "siteLogo" : "",
+    "nationalFlag" : ""
+    "nodesPerSystem" : "82944",
+    "processorsPerNode" : "1",
+    "coresPerProcessor" : "8",
+    "memoryPerNode" : "16",
+    "jobScheduler" : "PJM",
+    "queue" : [
+	{
+	    "queueName" : "",
+	    "maxNodes" : "",
+	    "minNodes" : "",
+	    "maxTime" : "",
+	    "maxMemory" : "",
+	    "notes" : ""
+	}
+    ],
+    "loginHost" : ""
+}

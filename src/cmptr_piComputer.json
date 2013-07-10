@@ -1,0 +1,41 @@
+{
+    "system" : "piComputer",
+    "site" : "Kobe University",
+    "country" : "Japan",
+    "manufacturer" : "Fujitsu",
+    "systemLogo" : "",
+    "siteLogo" : "",
+    "nationalFlag" : ""
+    "nodesPerSystem" : "48",
+    "processorsPerNode" : "1",
+    "coresPerProcessor" : "16",
+    "memoryPerNode" : "32",
+    "jobScheduler" : "PJM",
+    "queue" : [
+	{
+	    "queueName" : "large",
+	    "maxNodes" : "84",
+	    "minNodes" : "1",
+	    "maxTime" : "24:00:00",
+	    "maxMemory" : "28",
+	    "notes" : "For large jobs."
+	},
+	{
+	    "queueName" : "small",
+	    "maxNodes" : "12",
+	    "minNodes" : "1",
+	    "maxTime" : "00:10:00",
+	    "maxMemory" : "28",
+	    "notes" : "For debug or small jobs."
+	},
+	{
+	    "queueName" : "school",
+	    "maxNodes" : "96",
+	    "minNodes" : "1",
+	    "maxTime" : "00:10:00",
+	    "maxMemory" : "28",
+	    "notes" : "For school."
+	}
+    ],
+    "loginHost" : "pi.ircpi.kobe-u.ac.jp"
+}
