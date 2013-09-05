@@ -1,0 +1,25 @@
+{
+    "system" : "",
+    "site" : "",
+    "country" : "",
+    "manufacturer" : "",
+    "systemLogo" : "",
+    "siteLogo" : "",
+    "nationalFlag" : "",
+    "nodesPerSystem" : "",
+    "processorsPerNode" : "",
+    "coresPerProcessor" : "",
+    "memoryPerNode" : "",
+    "jobScheduler" : "",
+    "queues" : [
+	{
+	    "queueName" : "",
+	    "maxNodes" : "",
+	    "minNodes" : "",
+	    "maxTime" : "",
+	    "maxMemory" : "",
+	    "notes" : ""
+	}
+    ],
+    "loginHost" : ""
+}

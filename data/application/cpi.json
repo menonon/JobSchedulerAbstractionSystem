@@ -1,0 +1,8 @@
+{
+    "name" : "cpi",
+    "description" : "calculate pi",
+    "path" : "~/",
+    "logo" : "",
+    "exec" : "a.out %s"
+
+}

@@ -1,0 +1,15 @@
+{
+    "userName" : "menonon",
+    "avatar" : "",
+    "properties" : [
+	{
+	    "computerName" : "piComputer",
+	    "userName"     : "menonon",
+	    "sshIdentity"  : "~/id_rsa_LinuxPC",
+            "applications" : [
+		"cpi"
+	    ],
+	    "availableQueues" : ["large", "small"]
+	}
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "jobScheduler" : "",
+    "jobSubmit"    : "",
+    "jobStatus"    : "",
+    "jobDelete"    : "",
+    "prefix"       : "",
+    "err2stdout"   : "",
+    "queue"        : "",
+    "group"        : "",
+    "elapse"       : "",
+    "node"         : "",
+    "process"      : "",
+    "thread"       : ""
+}

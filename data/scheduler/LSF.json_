@@ -1,0 +1,14 @@
+{
+    "jobScheduler" : "LSF",
+    "jobSubmit"    : "qsub",
+    "jobStatus"    : "qjobs",
+    "jobDelete"    : "qkill",
+    "prefix"       : "#QSUB ",
+    "err2stdout"   : "",
+    "queue"        : "-q %s",
+    "group"        : "-ug %s",
+    "elapse"       : "-W %s",
+    "node"         : "-A proc=%s",
+    "process"      : "-A ",
+    "thread"       : "-A t=%s"
+}

@@ -1,0 +1,14 @@
+{
+    "jobScheduler" : "PJM",
+    "jobSubmit"    : "pjsub %(shellScript)s",
+    "jobStatus"    : "pjstat %(jobNumber)s",
+    "jobDelete"    : "pjdel %(jobNumber)s",
+    "prefix"       : "#PJM",
+    "err2stdout"   : "%(prefix)s -j",
+    "queue"        : "%(prefix)s -L \"rscgrp=%(queue)s\"",
+    "group"        : "%(prefix)s -g \"%(group)s\"",
+    "elapse"       : "%(prefix)s -L \"elapse=%(elapse)s\"",
+    "node"         : "%(prefix)s -L \"node=%(nodes)s\"",
+    "process"      : "%(prefix)s --mpi \"proc=%(processes)s\"",
+    "thread"       : "export OMP_NUM_THREADS=%(threads)s\nexport PARALLEL=%(threads)s"
+}

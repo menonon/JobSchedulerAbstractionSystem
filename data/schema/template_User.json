@@ -1,0 +1,12 @@
+{
+    "userName" : "",
+    "avatar" : "",
+    "properties" : [
+	{
+	    "computerName" : "",
+	    "userName"     : "",
+	    "sshIdentity"  : "",
+            "applications" : []
+	}
+    ]    
+}
