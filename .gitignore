@@ -6,3 +6,4 @@ sgks*
 *.pyc
 \#*\#
 .\#*
+data/user/*
