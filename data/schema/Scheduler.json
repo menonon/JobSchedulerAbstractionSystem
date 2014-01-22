@@ -14,6 +14,11 @@
 	    "id": "http://jsonschema.net/err2stdout",
 	    "required":false
 	    },
+	"exec": {
+	    "type":"string",
+	    "id": "http://jsonschema.net/exec",
+	    "required":false
+	    },
 	"group": {
 	    "type":"string",
 	    "id": "http://jsonschema.net/group",
@@ -37,6 +42,16 @@
 	"jobSubmit": {
 	    "type":"string",
 	    "id": "http://jsonschema.net/jobSubmit",
+	    "required":false
+	    },
+	"memory": {
+	    "type":"string",
+	    "id": "http://jsonschema.net/memory",
+	    "required":false
+	    },
+	"mpiexec": {
+	    "type":"string",
+	    "id": "http://jsonschema.net/mpiexec",
 	    "required":false
 	    },
 	"node": {

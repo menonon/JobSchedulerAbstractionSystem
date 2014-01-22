@@ -21,31 +21,32 @@ class jsas(object):
         usrsNames = list()
         for u in usrsTemp:
             usrsNames.append(u['userName'])
-        parser.add_argument('-U','--User', action='store', choices=usrsNames, required=True)
+        parser.add_argument('-U','--User', action='store', choices=usrsNames, required=True, help='User Name. You need to prepare data/user/yourname.json.')
         
         cmpsTemp = self.settings['cmps'].settingList
         cmpsNames = list()
         for c in cmpsTemp:
             cmpsNames.append(c['system'])
-        parser.add_argument('-C','--Computer', action='store', choices=cmpsNames, required=True)
+        parser.add_argument('-C','--Computer', action='store', choices=cmpsNames, required=True, help='Computer Name. You need to prepare data/computer/yourcomputer.json.')
 
         appsTemp = self.settings['apps'].settingList
         appsNames = list()
         for a in appsTemp:
             appsNames.append(a['name'])
-        parser.add_argument('-A','--Application', action='store', choices=appsNames, required=True)
+        parser.add_argument('-A','--Application', action='store', choices=appsNames, required=True, help='Application Name. You need to preapare data/application/yourapplication.json')
         
-        parser.add_argument('-t','--threads', action='store', default='1')
-        parser.add_argument('-p','--processes', action='store', default='1')
-        parser.add_argument('-n','--nodes', action='store', default='1')
-        parser.add_argument('-e','--elapse', action='store', default='1')
-        parser.add_argument('-q','--queue', action='store')
-        parser.add_argument('-g','--group', action='store')
+        parser.add_argument('-t','--threads', action='store', default='1',help='Number of threads per process. Usually this parameter is passed to OMP_NUM_THREADS(OpenMP).')
+        parser.add_argument('-p','--processes', action='store', default='1',help='Number of processes per node. Usually this parameter is passed to Job Scheduler or MPI.')
+        parser.add_argument('-n','--nodes', action='store', default='1', help='Number of nodes. Usually this parameter is passed to Job Scheduler or MPI.')
+        parser.add_argument('-e','--elapse', action='store', default='1', help='Elapse time. Following formats are accepted. hh:mm:ss, mm:ss, ss .')
+        parser.add_argument('-q','--queue', action='store', required=True, help='Queue.')
+        parser.add_argument('-g','--group', action='store',help='Group.')
+        parser.add_argument('-m','--memories', action='store',default='1',help='Memories. Unit is GB.')
         
-        parser.add_argument('-a','--AA','--ApplicationArguments', action='store', nargs='*', required=False, default={})
-        parser.add_argument('-o','--outfile', action='store')
-        parser.add_argument('--no-mpi', action='store_true',default=False)
-        parser.add_argument('--no-openmp', action='store_true',default=False)
+        parser.add_argument('-a','--AA','--ApplicationArguments', action='store', nargs='*', required=False, default={}, help='Application Arguments.')
+        parser.add_argument('-o','--outfile', action='store', help='outfile name.')
+        parser.add_argument('--no-mpi', action='store_true',default=False, help='turn mpi off.')
+        parser.add_argument('--no-openmp', action='store_true',default=False, help='turn openmp off.')
    
         self.parsedOptions = vars(parser.parse_args())
         self.parsedOptions['AA'] = tuple(self.parsedOptions['AA'])
@@ -59,22 +60,35 @@ class jsas(object):
                 tempDict = {'User' : u}
                 self.allOptions.update(tempDict)
         
+        
         for c in cmpsTemp:
             if c['system'] == self.allOptions['Computer']:
-                tempDict = {'Computer' : c}
-                self.allOptions.update(tempDict)
-        
+                for cc in self.allOptions['User']['properties']:
+                    if cc['computerName'] == c['system']:
+                        tempDict = {'Computer' : c}
+                        self.allOptions.update(tempDict)
+        if isinstance(self.allOptions['Computer'], str):
+            print 'You can\'t use %s computer !' % (self.allOptions['Computer'])
+            sys.exit(1)
+
         for a in appsTemp:
             if a['name'] == self.allOptions['Application']:
-                tempDict = {'Application' : a}
-                self.allOptions.update(tempDict)
+                for aa in self.allOptions['User']['properties']:
+                    if aa['computerName'] == self.allOptions['Computer']['system']:
+                        for aaa in aa['applications']:
+                            if aaa == a['name']:
+                                tempDict = {'Application' : a}
+                                self.allOptions.update(tempDict)
+        if isinstance(self.allOptions['Application'],str):
+            print 'You can\'t use %s application !' % (self.allOptions['Application'])
 
         schsTemp = self.settings['schs'].settingList
         for s in schsTemp:
             if s['jobScheduler'] == self.allOptions['Computer']['jobScheduler']:
                 tempDict = {'Scheduler' : s}
                 self.allOptions.update(tempDict)
-
+        if isinstance(self.allOptions['Scheduler'],str):
+            print 'No setting for %s scheduler !' % (self.allOptions['Scheduler'])
         
         #print ''
         #print self.allOptions
@@ -86,9 +100,9 @@ class jsas(object):
         if not hasattr(self, 'optionsChecked'):
             sys.exit(1)
         
-        execute = 'mpiexec '
+        execute = self.allOptions['Scheduler']['mpiexec']+' '
         if self.allOptions['no_mpi']:
-            execute = ''
+            execute = self.allOptions['Scheduler']['exec']+' '
             self.allOptions['Scheduler']['process'] = ''
         
         if self.allOptions['no_openmp']:
@@ -96,6 +110,8 @@ class jsas(object):
         
         self.allOptions.update({'prefix':self.allOptions['Scheduler']['prefix']})
 
+        self.allOptions.update(self.splitTime(self.allOptions['elapse']))
+        
         jobScriptList = list()
 
         jobScriptList.append('#!/bin/sh')
@@ -129,9 +145,16 @@ class jsas(object):
 
         for q in self.allOptions['Computer']['queues']:
             if q['queueName'] == self.allOptions['queue']:
-                maxNodes = int(q['maxNodes'])
-                minNodes = int(q['minNodes'])
-                maxTime = q['maxTime']
+                for u in self.allOptions['User']['properties']:
+                    if u['computerName']==self.allOptions['Computer']['system']:
+                        for uu in u['availableQueues']:
+                            if q['queueName']==uu:
+                                maxNodes = int(q['maxNodes'])
+                                minNodes = int(q['minNodes'])
+                                maxTime = q['maxTime']
+        if not 'maxNodes' in locals():
+            print 'You can\'t use %s queue !' % (self.allOptions['queue'])
+            sys.exit(1)
 
         optNodes = optNodes.split('x')
         optNodes = map(int,optNodes)
@@ -146,7 +169,7 @@ class jsas(object):
         elapseTimeSeconds = self.timeToSeconds(optTime)
        
         if elapseTimeSeconds > maxTimeSeconds:
-            print 'You can\7t allocate elapse tiem (%d seconds) ! (elapse < %d) ' % (elapseTimeSeconds, maxTimeSeconds)
+            print 'You can\'t allocate elapse tiem (%d seconds) ! (elapse < %d) ' % (elapseTimeSeconds, maxTimeSeconds)
             sys.exit(1)
 
     def timeToSeconds(self,time):
@@ -159,6 +182,16 @@ class jsas(object):
             return ttime[0]*60 + ttime[1]
         elif len(ttime) == 3:
             return ttime[0]*3600 + ttime[1]*60 + ttime[2]
+
+    def splitTime(self, time):
+        ttime = time.split(':')
+
+        if len(ttime) == 1:
+            return {'hh':'00','mm':'00','ss':ttime[0]}
+        elif len(ttime) == 2:
+            return {'hh':'00','mm':ttime[0],'ss':ttime[1]}
+        elif len(ttime) == 3:
+            return {'hh':ttime[0],'mm':ttime[1], 'ss':ttime[2]}
             
 
 if __name__ == '__main__':

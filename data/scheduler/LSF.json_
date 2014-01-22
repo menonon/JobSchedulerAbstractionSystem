@@ -1,14 +1,17 @@
 {
     "jobScheduler" : "LSF",
-    "jobSubmit"    : "qsub",
-    "jobStatus"    : "qjobs",
-    "jobDelete"    : "qkill",
-    "prefix"       : "#QSUB ",
+    "jobSubmit"    : "qsub < %(shellScript)s",
+    "jobStatus"    : "qjobs %(jobNumber)s",
+    "jobDelete"    : "qkill %(jobNumber)s",
+    "prefix"       : "#QSUB",
     "err2stdout"   : "",
-    "queue"        : "-q %s",
-    "group"        : "-ug %s",
-    "elapse"       : "-W %s",
-    "node"         : "-A proc=%s",
-    "process"      : "-A ",
-    "thread"       : "-A t=%s"
+    "queue"        : "%(prefix)s -q %(queue)",
+    "group"        : "%(prefix)s -ug %(group)s",
+    "elapse"       : "%(prefix)s -W %(hh)s:%(mm)s",
+    "node"         : "%(prefix)s -A p=%(processes)s:t=%(threads)s:c=%(threads)s:m=%(memories)s",
+    "process"      : "",
+    "thread"       : "",
+    "memory"       : "",
+    "exec"         : "aprun -n $LSB_PROCS -d $LSB_CPUS -N $LSB_PPN",
+    "mpiexec"      : "aprun -n $LSB_PROCS -d $LSB_CPUS -N $LSB_PPN"
 }

@@ -1,0 +1,17 @@
+{
+    "jobScheduler" : "PBS",
+    "jobSubmit"    : "qsub %(shellScript)s",
+    "jobStatus"    : "qstat %(jobNumber)s",
+    "jobDelete"    : "qdel %(jobNumber)s",
+    "prefix"       : "#PBS",
+    "err2stdout"   : "-j oe",
+    "queue"        : "-q %(queue)s",
+    "group"        : "",
+    "elapse"       : "-l walltime=%(hh)s:%(mm)s:%(ss)s",
+    "node"         : "-l nodes=%(nodes)s",
+    "process"      : "-l ncpus=%(processes)s",
+    "thread"       : "",
+    "memory"       : "",
+    "exec"         : "",
+    "mpiexec"      : ""
+}

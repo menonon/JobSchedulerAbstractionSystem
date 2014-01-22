@@ -7,8 +7,11 @@
     "err2stdout"   : "%(prefix)s -j",
     "queue"        : "%(prefix)s -L \"rscgrp=%(queue)s\"",
     "group"        : "%(prefix)s -g \"%(group)s\"",
-    "elapse"       : "%(prefix)s -L \"elapse=%(elapse)s\"",
+    "elapse"       : "%(prefix)s -L \"elapse=%(hh)s:%(mm)s:%(ss)s\"",
     "node"         : "%(prefix)s -L \"node=%(nodes)s\"",
     "process"      : "%(prefix)s --mpi \"proc=%(processes)s\"",
-    "thread"       : "export OMP_NUM_THREADS=%(threads)s\nexport PARALLEL=%(threads)s"
+    "thread"       : "export OMP_NUM_THREADS=%(threads)s\nexport PARALLEL=%(threads)s",
+    "memory"       : "%(prefix)s -L \"node-mem=%(memories)s\"",
+    "exec"         : "",
+    "mpiexec"      : "mpiexec"
 }

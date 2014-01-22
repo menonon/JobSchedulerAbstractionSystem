@@ -22,7 +22,15 @@
 		    "applications": {
 			"type":"array",
 			"id": "http://jsonschema.net/properties/0/applications",
-			"required":false
+			"required":false,
+			"items":
+			{
+			    "type":"string",
+			    "id": "http://jsonschema.net/properties/0/applications/0",
+			    "required":false
+			    }
+			
+
 			},
 		    "computerName": {
 			"type":"string",
